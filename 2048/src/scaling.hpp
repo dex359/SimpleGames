@@ -4,34 +4,28 @@
 
 #pragma once
 
+#include <cmath>
 #include <QtCore>
 
-namespace Scaling {
+#define MIN_W 210  // Minimum width & height for main window
+#define MIN_H 320  // Also used for calculate aspect ratio for game frame
 
-    const int    MIN_WIDTH  = 210;
-    const int    MIN_HEIGHT = 320;
-    const double W2H        = 0.65625;
+class Scaling {
 
+private:
+    int current_width = MIN_W;
+    QMap<QString, double> data;
 
-    class Map {
+public:
+    static const int MIN_WIDTH  = MIN_W;
+    static const int MIN_HEIGHT = MIN_H;
+    static constexpr double W2H = static_cast<double>(MIN_W) / MIN_H;
 
-    private:
-        QMap<QString, double> data;
+    void fill(const int& matrix_res);
+    void update(const int& new_width);
+    const double& get(const QString& key);
+    int getInt(const QString& key);
+    QString getStr(const QString& key);
 
-    public:
-        explicit Map() {
-            update(210);
-        }
-
-        void update(double cur_width) {
-            double f = cur_width / MIN_WIDTH;
-            data["some"] = 120 * f;
-        }
-
-        double& operator[] (const QString& name) {
-            return data[name];
-        }
-
-    };
-}
+};
 
