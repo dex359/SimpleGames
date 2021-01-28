@@ -15,13 +15,13 @@ private:
     QSettings*      cfg;
     QPushButton* undo_b;
     QPushButton* newg_b;
-    Scaling map;
+    Scaling::Map*   map;
 
 public:
     explicit GameWidget(QWidget* parent) :QWidget(parent) {
         // construct
         cfg = new QSettings("2048.conf", QSettings::IniFormat, this);
-        map.fill(cfg->value("Game/grid").toInt());
+        map = new Scaling::Map(cfg->value("Game/grid").toInt(), this);
 
         // configure this
         setObjectName("GameWidget");
@@ -53,28 +53,28 @@ public:
             "font: %4px;"
             "color: %5;"
             "}").arg(
-            cfg->value("Appearance/color.grid").toString(),
-            map.getStr("button.border.radius"),
-            cfg->value("Appearance/color.grid").toString(),
-            map.getStr("button.font"),
-            cfg->value("Appearance/color.background").toString());
+            cfg->value ("Appearance/color.grid").toString(),
+            map->getStr("button.border.radius"),
+            cfg->value ("Appearance/color.grid").toString(),
+            map->getStr("button.font"),
+            cfg->value ("Appearance/color.background").toString());
         // apply
         undo_b->setStyleSheet(qss);
         newg_b->setStyleSheet(qss);
         // update geometry according to game widget width
-        undo_b->setGeometry(map.getInt("button.x1"),
-                            map.getInt("button.y"),
-                            map.getInt("button.width"),
-                            map.getInt("button.height"));
-        newg_b->setGeometry(map.getInt("button.x2"),
-                            map.getInt("button.y"),
-                            map.getInt("button.width"),
-                            map.getInt("button.height"));
+        undo_b->setGeometry(map->getInt("button.x1"),
+                            map->getInt("button.y"),
+                            map->getInt("button.width"),
+                            map->getInt("button.height"));
+        newg_b->setGeometry(map->getInt("button.x2"),
+                            map->getInt("button.y"),
+                            map->getInt("button.width"),
+                            map->getInt("button.height"));
 
     }
 
     void resizeEvent(QResizeEvent *event) override {
-        map.update(event->size().width());
+        map->update(event->size().width());
         updateButtons();
     }
 
