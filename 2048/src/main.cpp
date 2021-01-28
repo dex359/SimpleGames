@@ -6,6 +6,7 @@
 #include <QtCore>
 
 #include "scaling.hpp"
+#include "header.hpp"
 
 
 class GameWidget: public QWidget {
@@ -13,6 +14,7 @@ class GameWidget: public QWidget {
 
 private:
     QSettings*      cfg;
+    Header*      header;
     QPushButton* undo_b;
     QPushButton* newg_b;
     Scaling::Map*   map;
@@ -20,14 +22,13 @@ private:
 public:
     explicit GameWidget(QWidget* parent) :QWidget(parent) {
         // construct
-        cfg = new QSettings("2048.conf", QSettings::IniFormat, this);
-        map = new Scaling::Map(cfg->value("Game/grid").toInt(), this);
-
+        cfg       = new QSettings("2048.conf", QSettings::IniFormat, this);
+        map       = new Scaling::Map(cfg->value("Game/grid").toInt(), this);
+        header    = new Header(map, cfg, this);
+        undo_b    = new QPushButton(cfg->value("Locale/undo").toString(), this);
+        newg_b    = new QPushButton(cfg->value("Locale/new").toString(), this);
         // configure this
         setObjectName("GameWidget");
-        setStyleSheet("background-color: #ff00ff;");
-        undo_b = new QPushButton(cfg->value("Locale/undo").toString(), this);
-        newg_b = new QPushButton(cfg->value("Locale/new").toString(), this);
         connect(undo_b, SIGNAL(clicked(bool)), this, SLOT(undo()));
         connect(newg_b, SIGNAL(clicked(bool)), this, SLOT(new_game()));
 
@@ -43,7 +44,7 @@ public:
 
     }
 
-    void updateButtons() {
+    void updateButtonsGeometry() {
         // gen dynamic stylesheet
         auto qss = QString(
             "QPushButton {"
@@ -73,9 +74,16 @@ public:
 
     }
 
+    void updateHeader() {
+        header->setGeometry(0, 0,
+            map->getInt("header.width"),
+            map->getInt("header.height"));
+    }
+
     void resizeEvent(QResizeEvent *event) override {
         map->update(event->size().width());
-        updateButtons();
+        updateHeader();
+        updateButtonsGeometry();
     }
 
     ~GameWidget() override {

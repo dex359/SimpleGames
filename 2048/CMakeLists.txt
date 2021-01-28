@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE src/main.cpp
            src/scaling.cpp      src/scaling.hpp
-           src/score_board.cpp  src/score_board.hpp
+           src/header.cpp       src/header.hpp
            src/matrix.cpp       src/matrix.hpp
            src/tile.cpp         src/tile.hpp)
 

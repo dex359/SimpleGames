@@ -7,6 +7,12 @@
 
 Scaling::Map::Map(const int& matrix_resolution, QObject* parent) :QObject(parent) {
     data = {
+        {"header.width",       210},
+        {"header.height",       85},
+        {"subtitle.font",       30},
+        {"subtitle.x",          20},
+        {"subtitle.y",          45},
+        {"description.font",    10},
         {"button.width",        75},
         {"button.height",       25},
         {"button.border.radius", 4},
