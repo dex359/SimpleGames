@@ -4,26 +4,18 @@
 
 #include <QtWidgets>
 #include <QtCore>
-#include "main.moc"
 
 #include "scaling.hpp"
 
+
 class GameWidget: public QWidget {
-Q_OBJECT
+    Q_OBJECT
 
 private:
-    QSettings* cfg;
-    Scaling map;
+    QSettings*      cfg;
     QPushButton* undo_b;
-    QPushButton* new_b;
-    const QString style_template =
-        "QPushButton {"
-        "border: 1px solid %1;"
-        "border-radius: %2;"
-        "background-color: %3;"
-        "font: %4px;"
-        "color: %5;"
-        "}";
+    QPushButton* newg_b;
+    Scaling map;
 
 public:
     explicit GameWidget(QWidget* parent) :QWidget(parent) {
@@ -33,41 +25,54 @@ public:
 
         // configure this
         setObjectName("GameWidget");
-        setStyleSheet("background-color: #ffffff;");
+        setStyleSheet("background-color: #ff00ff;");
         undo_b = new QPushButton(cfg->value("Locale/undo").toString(), this);
-        new_b = new QPushButton(cfg->value("Locale/new").toString(), this);
-        //connect(undo_b, SIGNAL(clicked(bool)), this, SLOT(undo(bool)));
-        //connect(new_b, SIGNAL(clicked(bool)), this, SLOT(new_game(bool)));
+        newg_b = new QPushButton(cfg->value("Locale/new").toString(), this);
+        connect(undo_b, SIGNAL(clicked(bool)), this, SLOT(undo()));
+        connect(newg_b, SIGNAL(clicked(bool)), this, SLOT(new_game()));
 
         // configure host window
         parent->resize(cfg->value("Window/size").toSize());
         parent->setWindowTitle(cfg->value("Locale/title").toString());
         parent->setWindowIcon(QIcon("icon.png"));
-        parent->setStyleSheet("background-color: " +
-                              cfg->value("Appearance/color.background").toString() +
-                              ";");
+        parent->setStyleSheet(QString("background-color: %1;").arg(
+                              cfg->value("Appearance/color.background").toString()));
 
 
 
 
     }
-
 
     void updateButtons() {
-        QString style = style_template.arg(
-                cfg->value("Appearance/color.grid").toString(),
-                map.getStr("button.border.radius"),
-                cfg->value("Appearance/color.grid").toString(),
-                map.getStr("button.font"),
-                cfg->value("Appearance/color.background").toString());
-        undo_b->setStyleSheet(style);
-        undo_b->setGeometry(map.getInt("button.x1"), map.getInt("button.y"),
-                            map.getInt("button.width"), map.getInt("button.height"));
-        new_b->setStyleSheet(style);
-        new_b->setGeometry(map.getInt("button.x2"), map.getInt("button.y"),
-                           map.getInt("button.width"), map.getInt("button.height"));
+        // gen dynamic stylesheet
+        auto qss = QString(
+            "QPushButton {"
+            "border: 1px solid %1;"
+            "border-radius: %2;"
+            "background-color: %3;"
+            "font: %4px;"
+            "color: %5;"
+            "}").arg(
+            cfg->value("Appearance/color.grid").toString(),
+            map.getStr("button.border.radius"),
+            cfg->value("Appearance/color.grid").toString(),
+            map.getStr("button.font"),
+            cfg->value("Appearance/color.background").toString());
+        // apply
+        undo_b->setStyleSheet(qss);
+        newg_b->setStyleSheet(qss);
+        // update geometry according to game widget width
+        undo_b->setGeometry(map.getInt("button.x1"),
+                            map.getInt("button.y"),
+                            map.getInt("button.width"),
+                            map.getInt("button.height"));
+        newg_b->setGeometry(map.getInt("button.x2"),
+                            map.getInt("button.y"),
+                            map.getInt("button.width"),
+                            map.getInt("button.height"));
 
     }
+
     void resizeEvent(QResizeEvent *event) override {
         map.update(event->size().width());
         updateButtons();
@@ -76,6 +81,15 @@ public:
     ~GameWidget() override {
         cfg->setValue("Window/size", size());
         cfg->sync();
+    }
+
+public slots:
+    void new_game() {
+        qDebug() << "New game";
+    };
+
+    void undo() {
+        qDebug() << "Undo";
     }
 
 
@@ -116,6 +130,7 @@ void HostWindow::resizeEvent(QResizeEvent *event) {
                        new_height);
 }
 
+#include "main.moc"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

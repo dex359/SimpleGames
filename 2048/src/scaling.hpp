@@ -29,3 +29,5 @@ public:
 
 };
 
+#undef MIN_W
+#undef MIN_H
