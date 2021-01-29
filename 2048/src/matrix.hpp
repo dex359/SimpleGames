@@ -2,7 +2,8 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#pragma once
+#ifndef SIMPLEGAMES_MATRIX_HPP
+#define SIMPLEGAMES_MATRIX_HPP
 
 
 class matrix {
@@ -10,4 +11,4 @@ class matrix {
 };
 
 
-
+#endif //SIMPLEGAMES_MATRIX_HPP

@@ -2,7 +2,8 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#pragma once
+#ifndef SIMPLEGAMES_TILE_HPP
+#define SIMPLEGAMES_TILE_HPP
 
 
 class tile {
@@ -10,4 +11,4 @@ class tile {
 };
 
 
-
+#endif //SIMPLEGAMES_TILE_HPP
