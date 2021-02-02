@@ -2,8 +2,8 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#ifndef SIMPLEGAMES_MATRIX_HPP
-#define SIMPLEGAMES_MATRIX_HPP
+#ifndef SIMPLEGAMES_MATRIX_WIDGET_HPP
+#define SIMPLEGAMES_MATRIX_WIDGET_HPP
 
 
 #include <random>
@@ -12,6 +12,7 @@
 
 #include "scaling.hpp"
 #include "tile.hpp"
+#include "square_array.hpp"
 
 
 // Matrix representation flags
@@ -126,7 +127,7 @@ public:
 
     }
 
-    static void merge(MxRepr repr) {
+    void merge(MxRepr repr) {
         switch (repr) {
             case MxRepr::NORMAL:
                 qDebug() << "left";
@@ -176,8 +177,10 @@ protected:
 
 public:
     MatrixWidget(QSettings* config, Scaling::Map* s_map, QWidget* parent)
-        :QWidget(parent), cfg(config), map(s_map), matrix(config, s_map) {}
+        :QWidget(parent), cfg(config), map(s_map), matrix(config, s_map) {
+        setFocus();
+    }
 };
 
 
-#endif //SIMPLEGAMES_MATRIX_HPP
+#endif //SIMPLEGAMES_MATRIX_WIDGET_HPP

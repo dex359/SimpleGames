@@ -7,12 +7,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCE
         src/main.cpp
         src/scaling.hpp
-        src/header.hpp
-        src/header.cpp
-        src/matrix.hpp
-        src/matrix.cpp
+        src/header_widget.hpp
+        src/header_widget.cpp
+        src/matrix_widget.hpp
+        src/matrix_widget.cpp
         src/tile.hpp
-        src/tile.cpp)
+        src/tile.cpp
+        src/square_array.hpp)
 
 set(QT_VERSION     5)
 set(CMAKE_AUTOMOC ON)

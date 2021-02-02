@@ -2,7 +2,7 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#include "matrix.hpp"
+#include "matrix_widget.hpp"
 
 
 void MatrixWidget::paintEvent(QPaintEvent* event) {

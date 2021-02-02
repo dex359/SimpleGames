@@ -3,7 +3,7 @@
 //
 
 
-#include "header.hpp"
+#include "header_widget.hpp"
 
 
 void HeaderWidget::paintEvent(QPaintEvent* event) {

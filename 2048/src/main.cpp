@@ -6,8 +6,8 @@
 #include <QtCore>
 
 #include "scaling.hpp"
-#include "header.hpp"
-#include "matrix.hpp"
+#include "header_widget.hpp"
+#include "matrix_widget.hpp"
 
 
 class GameWidget: public QWidget {

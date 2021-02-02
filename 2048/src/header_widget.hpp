@@ -2,8 +2,8 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#ifndef SIMPLEGAMES_HEADER_HPP
-#define SIMPLEGAMES_HEADER_HPP
+#ifndef SIMPLEGAMES_HEADER_WIDGET_HPP
+#define SIMPLEGAMES_HEADER_WIDGET_HPP
 
 
 #include <QtWidgets>
@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif //SIMPLEGAMES_HEADER_HPP
+#endif //SIMPLEGAMES_HEADER_WIDGET_HPP
