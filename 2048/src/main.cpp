@@ -34,6 +34,8 @@ public:
         setObjectName("GameWidget");
         connect(undo_b, SIGNAL(clicked(bool)), this, SLOT(undo()));
         connect(newg_b, SIGNAL(clicked(bool)), this, SLOT(new_game()));
+        undo_b->setFocusPolicy(Qt::NoFocus);
+        newg_b->setFocusPolicy(Qt::NoFocus);
 
         // configure host window
         parent->resize(cfg->value("Window/size").toSize());
@@ -86,8 +88,8 @@ public:
     void updateMatrixGeometry() {
         matrix->setGeometry(map->getInt("matrix.x"),
                             map->getInt("matrix.y"),
-                            map->getInt("matrix.width"),
-                            map->getInt("matrix.height"));
+                            map->getInt("matrix.resolution"),
+                            map->getInt("matrix.resolution"));
     }
 
     void resizeEvent(QResizeEvent *event) override {

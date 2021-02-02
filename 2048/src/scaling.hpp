@@ -25,6 +25,9 @@ private:
 
 public:
     Map(const int& matrix_res, QObject* parent) :QObject(parent) {
+        double mr = 170;                                       // matrix resolution
+        double cs = 4;                                         // space between cells
+        double cr = (mr - (matrix_res + 1) * cs) / matrix_res; // cell resolution
         data = {
             {"header.width",       210},
             {"header.height",       85},
@@ -52,9 +55,11 @@ public:
             {"button.y",            88},
             {"matrix.x",            20},
             {"matrix.y",           130},
-            {"matrix.width",       170},
-            {"matrix.height",      170},
-            {"matrix.rounding",      4}
+            {"matrix.resolution",   mr},
+            {"matrix.rounding",      4},
+            {"cell.spacing",        cs},
+            {"cell.resolution",     cr},
+            {"cell.rounding",        3}
         };
     }
 
