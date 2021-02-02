@@ -11,7 +11,7 @@
 #include "scaling.hpp"
 
 
-class Header: public QWidget {
+class HeaderWidget: public QWidget {
 
 private:
     int score = 0;
@@ -23,8 +23,8 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    Header(Scaling::Map* scaling_map, QSettings* config, QWidget* parent)
-        :map(scaling_map), cfg(config), QWidget(parent) {}
+    HeaderWidget(QSettings* config, Scaling::Map* scaling_map, QWidget* parent)
+        :cfg(config), map(scaling_map), QWidget(parent) {}
 };
 
 

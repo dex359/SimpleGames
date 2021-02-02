@@ -6,8 +6,29 @@
 #define SIMPLEGAMES_MATRIX_HPP
 
 
-class matrix {
+#include <QtWidgets>
 
+#include "scaling.hpp"
+
+
+class Matrix {
+private:
+
+};
+
+
+class MatrixWidget: public QWidget {
+
+private:
+    QSettings* cfg;
+    Scaling::Map* map;
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
+public:
+    MatrixWidget(QSettings* config, Scaling::Map* s_map, QWidget* parent)
+        :cfg(config), map(s_map), QWidget(parent) {}
 };
 
 

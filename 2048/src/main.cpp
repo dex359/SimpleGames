@@ -7,24 +7,27 @@
 
 #include "scaling.hpp"
 #include "header.hpp"
+#include "matrix.hpp"
 
 
 class GameWidget: public QWidget {
     Q_OBJECT
 
 private:
-    QSettings*      cfg;
-    Header*      header;
-    QPushButton* undo_b;
-    QPushButton* newg_b;
-    Scaling::Map*   map;
+    QSettings*       cfg;
+    QPushButton*  undo_b;
+    QPushButton*  newg_b;
+    HeaderWidget* header;
+    MatrixWidget* matrix;
+    Scaling::Map*    map;
 
 public:
     explicit GameWidget(QWidget* parent) :QWidget(parent) {
         // construct
         cfg       = new QSettings("2048.conf", QSettings::IniFormat, this);
         map       = new Scaling::Map(cfg->value("Game/grid").toInt(), this);
-        header    = new Header(map, cfg, this);
+        header    = new HeaderWidget(cfg, map, this);
+        matrix    = new MatrixWidget(cfg, map, this);
         undo_b    = new QPushButton(cfg->value("Locale/undo").toString(), this);
         newg_b    = new QPushButton(cfg->value("Locale/new").toString(), this);
         // configure this
@@ -74,16 +77,24 @@ public:
 
     }
 
-    void updateHeader() {
+    void updateHeaderGeometry() {
         header->setGeometry(0, 0,
             map->getInt("header.width"),
             map->getInt("header.height"));
     }
 
+    void updateMatrixGeometry() {
+        matrix->setGeometry(map->getInt("matrix.x"),
+                            map->getInt("matrix.y"),
+                            map->getInt("matrix.width"),
+                            map->getInt("matrix.height"));
+    }
+
     void resizeEvent(QResizeEvent *event) override {
         map->update(event->size().width());
-        updateHeader();
+        updateHeaderGeometry();
         updateButtonsGeometry();
+        updateMatrixGeometry();
     }
 
     ~GameWidget() override {

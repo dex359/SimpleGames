@@ -49,7 +49,12 @@ public:
             {"button.font",         10},
             {"button.x1",           20},
             {"button.x2",          115},
-            {"button.y",            88}
+            {"button.y",            88},
+            {"matrix.x",            20},
+            {"matrix.y",           130},
+            {"matrix.width",       170},
+            {"matrix.height",      170},
+            {"matrix.rounding",      4}
         };
     }
 

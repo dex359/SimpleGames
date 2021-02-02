@@ -6,7 +6,7 @@
 #include "header.hpp"
 
 
-void Header::paintEvent(QPaintEvent* event) {
+void HeaderWidget::paintEvent(QPaintEvent* event) {
     // configure painter
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
@@ -35,11 +35,11 @@ void Header::paintEvent(QPaintEvent* event) {
                              QString::number(best));
     // define score and best boundary rectangles
     auto sbr = p.boundingRect(geometry(),
-                               Qt::AlignCenter | Qt::TextWordWrap,
-                               score_line);
+                              Qt::AlignCenter | Qt::TextWordWrap,
+                              score_line);
     auto bbr = p.boundingRect(geometry(),
-                               Qt::AlignCenter | Qt::TextWordWrap,
-                               best_line);
+                              Qt::AlignCenter | Qt::TextWordWrap,
+                              best_line);
     // define score and best background rectangles
     auto score_rect = QRect(map->getInt("score.x") -
                             sbr.width() -
