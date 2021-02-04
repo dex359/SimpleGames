@@ -2,8 +2,8 @@
 // Created by Denys Ksenchuk <denny.ks359@gmail.com>
 //
 
-#ifndef SIMPLEGAMES_HEADER_WIDGET_HPP
-#define SIMPLEGAMES_HEADER_WIDGET_HPP
+#ifndef SIMPLEGAMES_HEADER_HPP
+#define SIMPLEGAMES_HEADER_HPP
 
 
 #include <QtWidgets>
@@ -11,21 +11,21 @@
 #include "scaling.hpp"
 
 
-class HeaderWidget: public QWidget {
+class GameHeader: public QWidget {
 
 private:
     int score = 0;
     int best = 0;
     QSettings* cfg;
-    Scaling::Map* map;
+    ScalingMap* map;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 public:
-    HeaderWidget(QSettings* config, Scaling::Map* scaling_map, QWidget* parent)
+    GameHeader(QSettings* config, ScalingMap* scaling_map, QWidget* parent)
         :cfg(config), map(scaling_map), QWidget(parent) {}
 };
 
 
-#endif //SIMPLEGAMES_HEADER_WIDGET_HPP
+#endif //SIMPLEGAMES_HEADER_HPP

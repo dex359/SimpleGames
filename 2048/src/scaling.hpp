@@ -11,21 +11,15 @@
 #include <QtCore>
 
 
-namespace Scaling {
-
-const int    MIN_WIDTH  = 210;  // Minimum width & height for main window
-const int    MIN_HEIGHT = 320;  // Also used for calculate aspect ratio
-const double W2H = static_cast<double>(MIN_WIDTH) / MIN_HEIGHT;
-
-class Map: public QObject {
-
-private:
-    int current_width = MIN_WIDTH;
-    QMap<QString, double> data;
+class ScalingMap: public QObject {
 
 public:
-    Map(const int& matrix_res, QObject* parent) :QObject(parent) {
-        double mr = 170;                                       // matrix resolution
+    const static int MIN_WIDTH  = 210; // Minimum width & height for main window
+    const static int MIN_HEIGHT = 320; // Also used for calculate aspect ratio
+    constexpr static double W2H = static_cast<double>(MIN_WIDTH) / MIN_HEIGHT;
+
+    ScalingMap(const int& matrix_res, QObject* parent) : QObject(parent) {
+        double mr = 170;                                       // board resolution
         double cs = 4;                                         // space between cells
         double cr = (mr - (matrix_res + 1) * cs) / matrix_res; // cell resolution
         data = {
@@ -53,10 +47,10 @@ public:
             {"button.x1",           20},
             {"button.x2",          115},
             {"button.y",            88},
-            {"matrix.x",            20},
-            {"matrix.y",           130},
-            {"matrix.resolution",   mr},
-            {"matrix.rounding",      4},
+            {"board.x",             20},
+            {"board.y",            130},
+            {"board.resolution",    mr},
+            {"board.rounding",       4},
             {"cell.spacing",        cs},
             {"cell.resolution",     cr},
             {"cell.rounding",        3}
@@ -84,8 +78,11 @@ public:
     QString getStr(const QString& key) {
         return QString::number(getInt(key));
     }
+
+private:
+    int current_width = MIN_WIDTH;
+    QMap<QString, double> data;
 };
-} // namespace Scaling
 
 
 #endif //SIMPLEGAMES_SCALING_HPP

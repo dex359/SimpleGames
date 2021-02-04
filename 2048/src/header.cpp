@@ -3,10 +3,10 @@
 //
 
 
-#include "header_widget.hpp"
+#include "header.hpp"
 
 
-void HeaderWidget::paintEvent(QPaintEvent* event) {
+void GameHeader::paintEvent(QPaintEvent* event) {
     // configure painter
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);

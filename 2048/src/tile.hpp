@@ -6,40 +6,26 @@
 #define SIMPLEGAMES_TILE_HPP
 
 
-#include <QtWidgets>
-#include <utility>
+#include <QRectF>
 
 
 class Tile {
 
-private:
-    QRectF rect;
-    QColor color;
-    int val;
-
 public:
-    Tile() :val(0) {}
-    Tile(const QRectF& r, QColor  c, int v) :rect(r), color(std::move(c)), val(v) {}
+    using RectType  = QRectF;
+    using RectCoord = double;
 
-    const QRectF& geometry() {
-        return rect;
-    }
+    explicit Tile(int value = 0) : tile_value(value) {}
+    explicit Tile(int value, const RectType& rect) : tile_value(value), tile_rect(rect) {}
 
-    void setGeometry(const QRectF& r) {
-        rect = r;
-    }
-    int value() {
-        return val;
-    }
-    void move(const QRectF& r) {
-        rect = r;
-    }
-    void render(QPainter* p) {
-        if (val) {
-            p->drawRoundedRect(rect, 3, 3, Qt::AbsoluteSize);
-            p->drawText(rect, Qt::AlignCenter, QString::number(val));
-        }
-    }
+    const RectType& geometry() {return tile_rect;}
+    void setGeometry(const RectType& rect) {tile_rect = rect;}
+    void setGeometry(RectCoord x, RectCoord y, RectCoord w, RectCoord h) {tile_rect.setRect(x, y, w, h);}
+    int value() const {return tile_value;}
+
+private:
+    RectType tile_rect;
+    int tile_value;
 };
 
 
